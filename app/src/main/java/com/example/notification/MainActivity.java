@@ -14,6 +14,9 @@ import android.widget.Button;
 public class MainActivity extends AppCompatActivity {
 
     private Button button_notify;
+    private  Button button_update;
+
+    private Button button_cancel;
     private NotificationManager mNotifyManager;
 
     private static final int NOTIFICATION_ID = 0;
@@ -25,6 +28,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         button_notify = findViewById(R.id.notify);
+        button_update = findViewById(R.id.update);
+        button_cancel=findViewById(R.id.cancel);
+
+
+
+
+
+
         button_notify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -32,7 +43,39 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         createNotificationChannel();
+
+
+
+        button_update.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Check if notification manager is initialized
+                if (mNotifyManager != null) {
+                    // Update notification content or any other properties
+                    NotificationCompat.Builder updatedBuilder = getNotificationBuilder()
+                            .setContentText("Updated notification text");
+                    mNotifyManager.notify(NOTIFICATION_ID, updatedBuilder.build());
+                }
+            }
+        });
+
+
+
+        button_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Check if notification manager is initialized and cancel the notification
+                if (mNotifyManager != null) {
+                    mNotifyManager.cancel(NOTIFICATION_ID);
+                }
+            }
+        });
+
+
+
     }
+
+
 
     private NotificationCompat.Builder getNotificationBuilder(){
         return new NotificationCompat.Builder(this, PRIMARY_CHANNEL_ID)
@@ -67,4 +110,9 @@ public class MainActivity extends AppCompatActivity {
             mNotifyManager.createNotificationChannel(notificationChannel);
         }
     }
+
+
+
+
+
 }
